@@ -32,7 +32,6 @@ function StringVisitor() {
   }
 
   function hasResult(expected) {
-    console.log(itemString, expected);
     return itemString === expected;
   }
 
@@ -44,15 +43,30 @@ function StringVisitor() {
 
 describe('Linked List', function() {
 
-  it('creating a list', function() {
-    var visitor = new StringVisitor();
+  function createChain(){
     var first = new Node('A');
     var second = new Node('B');
     first.setNext(second);
     var third = new Node('C');
     second.setNext(third);
-    first.accept(visitor);
+    return first;
+  }
+
+  it('creating a list', function() {
+    var visitor = new StringVisitor();
+    var chain = createChain();
+    chain.accept(visitor);
     assert.ok(visitor.hasResult('ABC'));
+  });
+
+  it('insert at the beginning', function(){
+    var visitor = new StringVisitor();
+    var chain = createChain();
+    var oldFirst = chain;
+    var first = new Node('Z');
+    first.setNext(oldFirst);
+    first.accept(visitor);
+    assert.ok(visitor.hasResult('ZABC'));
   });
 
 });
