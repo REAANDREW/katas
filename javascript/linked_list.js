@@ -5,18 +5,32 @@ function Node(item) {
   var first;
   var last;
   var next;
+  var previous;
 
-  
+
   function setNext(node) {
+    if (node === null || node === undefined) {
+      next = node;
+      return;
+    }
     next = node;
-    if(first === null || first === undefined){
+    if (first === null || first === undefined) {
       node.setFirst(self);
-    }else{
+    } else {
       node.setFirst(first);
     }
+    node.setPrevious(self);
     var nodeFirst = node.getFirst();
     nodeFirst.setLast(node);
     setLast(node);
+  }
+
+  function getPrevious() {
+    return previous;
+  }
+
+  function setPrevious(node) {
+    previous = node;
   }
 
   function getNext() {
@@ -31,12 +45,24 @@ function Node(item) {
     return last;
   }
 
-  function setFirst(node){
+  function setFirst(node) {
     first = node;
   }
 
-  function getFirst(){
+  function getFirst() {
+    if (first === null || first === undefined) {
+      return self;
+    }
     return first;
+  }
+
+  function pop() {
+    var first = self.getFirst();
+    var last = first.getLast();
+    var previous = last.getPrevious();
+    previous.setNext(null);
+    first.setLast(previous); 
+    return last;
   }
 
   function accept(visitor) {
@@ -47,14 +73,17 @@ function Node(item) {
   }
 
   var self = Object.freeze({
-      item: item,
-      setNext: setNext,
-      getNext: getNext,
-      getLast: getLast,
-      setLast: setLast,
-      setFirst : setFirst,
-      getFirst : getFirst,
-      accept: accept
+    item: item,
+    getPrevious: getPrevious,
+    setPrevious: setPrevious,
+    setNext: setNext,
+    getNext: getNext,
+    getLast: getLast,
+    setLast: setLast,
+    setFirst: setFirst,
+    getFirst: getFirst,
+    pop: pop,
+    accept: accept
   });
 
   return self;
@@ -136,7 +165,7 @@ describe('Linked List', function() {
     assert.equal(first.getLast().item, 'C');
   });
 
-  it('the second item can report the last item in a three node linked list', function(){
+  it('the second item can report the last item in a three node linked list', function() {
     var second = chain.getNext();
     var last = second.getLast();
     assert.equal(last.item, 'C');
@@ -151,7 +180,7 @@ describe('Linked List', function() {
     visitor.assertResult('ABCZ');
   });
 
-  it('setting the last node updates the first node so that it reflects the new last node', function(){
+  it('setting the last node updates the first node so that it reflects the new last node', function() {
     var oldLast = chain.getLast();
     var last = new Node('Z');
     oldLast.setNext(last);
@@ -161,5 +190,10 @@ describe('Linked List', function() {
   });
 
 
+  it('Deleting the last node updates the chain', function() {
+    var oldLast = chain.pop();
+    assert.equal(oldLast.item, 'C');
+    assert.equal(chain.getLast().item, 'B');
+  });
 
 });
