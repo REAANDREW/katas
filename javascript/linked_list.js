@@ -6,16 +6,6 @@ function Node(item) {
   var last;
   var next;
 
-  var self = {
-      item: item,
-      setNext: setNext,
-      getNext: getNext,
-      getLast: getLast,
-      setLast: setLast,
-      setFirst : setFirst,
-      getFirst : getFirst,
-      accept: accept
-  };
   
   function setNext(node) {
     next = node;
@@ -55,6 +45,17 @@ function Node(item) {
       next.accept(visitor);
     }
   }
+
+  var self = Object.freeze({
+      item: item,
+      setNext: setNext,
+      getNext: getNext,
+      getLast: getLast,
+      setLast: setLast,
+      setFirst : setFirst,
+      getFirst : getFirst,
+      accept: accept
+  });
 
   return self;
 }
@@ -158,5 +159,7 @@ describe('Linked List', function() {
     var newLast = chain.getLast();
     assert.equal(newLast.item, 'Z');
   });
+
+
 
 });
