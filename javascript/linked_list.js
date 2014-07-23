@@ -2,11 +2,10 @@ var assert = require('assert');
 
 function Node(item) {
 
-  var first;
-  var last;
-  var next;
-  var previous;
-
+  var first = null;
+  var last = null;
+  var next = null;
+  var previous = null;
 
   function setNext(node) {
     if (node === null || node === undefined) {
@@ -14,11 +13,7 @@ function Node(item) {
       return;
     }
     next = node;
-    if (first === null || first === undefined) {
-      node.setFirst(self);
-    } else {
-      node.setFirst(first);
-    }
+    node.setFirst(first);
     node.setPrevious(self);
     var nodeFirst = node.getFirst();
     nodeFirst.setLast(node);
@@ -50,19 +45,23 @@ function Node(item) {
   }
 
   function getFirst() {
-    if (first === null || first === undefined) {
-      return self;
-    }
     return first;
   }
 
   function pop() {
-    var first = self.getFirst();
-    var last = first.getLast();
+    var firstItem = self.getFirst();
+    var last = firstItem.getLast();
     var previous = last.getPrevious();
     previous.setNext(null);
-    first.setLast(previous); 
+    firstItem.setLast(previous);
     return last;
+  }
+
+  function push(node){
+    var firstItem = self.getFirst();
+    var oldLast = firstItem.getLast();
+    oldLast.setNext(node);
+    first.setLast(node);
   }
 
   function accept(visitor) {
@@ -72,7 +71,7 @@ function Node(item) {
     }
   }
 
-  var self = Object.freeze({
+  var self = {
     item: item,
     getPrevious: getPrevious,
     setPrevious: setPrevious,
@@ -83,8 +82,10 @@ function Node(item) {
     setFirst: setFirst,
     getFirst: getFirst,
     pop: pop,
+    push : push,
     accept: accept
-  });
+  };
+  first = last = self;
 
   return self;
 }
@@ -146,7 +147,7 @@ describe('Linked List', function() {
 
   it('sets the last node with one node', function() {
     var first = new Node('A');
-    assert.equal(first.getLast(), undefined);
+    assert.equal(first.getLast(), first);
   });
 
   it('sets the last node when the next node is set', function() {
@@ -190,10 +191,41 @@ describe('Linked List', function() {
   });
 
 
-  it('Deleting the last node updates the chain', function() {
+  it('supports popping the last node', function() {
     var oldLast = chain.pop();
     assert.equal(oldLast.item, 'C');
     assert.equal(chain.getLast().item, 'B');
+  });
+
+  it('supports pushing an item onto the end', function() {
+    var a = new Node('A');
+    var b = new Node('B');
+    a.push(b);
+  });
+
+  it.skip('speed of a native array', function() {
+
+    var a = [];
+    for (var i = 0; i < 100000; i++) {
+      a.push(new Node(i));
+    }
+    while (a.length > 0) {
+      a.pop();
+    }
+
+  });
+
+  it.skip('speed of a linked list', function() {
+    var a = new Node('A');
+
+    for (var i = 0; i < 100000; i++) {
+      a.push(new Node(i));
+    }
+
+    while(a.getNext() != null){
+      var item = a.pop();
+    }
+
   });
 
 });
