@@ -26,6 +26,7 @@ function Node(item) {
     }
     var nodeFirst = node.getFirst();
     nodeFirst.setLast(node);
+    setLast(node);
   }
 
   function getNext() {
@@ -134,6 +135,12 @@ describe('Linked List', function() {
     assert.equal(first.getLast().item, 'C');
   });
 
+  it('the second item can report the last item in a three node linked list', function(){
+    var second = chain.getNext();
+    var last = second.getLast();
+    assert.equal(last.item, 'C');
+  });
+
   it('adds an item to the end', function() {
     var oldLast = chain.getLast();
     var last = new Node('Z');
@@ -141,6 +148,15 @@ describe('Linked List', function() {
     chain.setLast(last);
     chain.accept(visitor);
     visitor.assertResult('ABCZ');
+  });
+
+  it('setting the last node updates the first node so that it reflects the new last node', function(){
+    var oldLast = chain.getLast();
+    var last = new Node('Z');
+    oldLast.setNext(last);
+    chain.setLast(last);
+    var newLast = chain.getLast();
+    assert.equal(newLast.item, 'Z');
   });
 
 });
