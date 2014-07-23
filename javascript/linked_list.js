@@ -190,7 +190,6 @@ describe('Linked List', function() {
     assert.equal(newLast.item, 'Z');
   });
 
-
   it('supports popping the last node', function() {
     var oldLast = chain.pop();
     assert.equal(oldLast.item, 'C');
