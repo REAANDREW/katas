@@ -5,3 +5,4 @@ else
 fi
 mkdir -p build
 ./gyp/gyp -f make --depth . --generator-output build/ pushdown-stack.gyp
+(cd build/ ; make)
