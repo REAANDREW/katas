@@ -64,6 +64,12 @@ function Node(item) {
     first.setLast(node);
   }
 
+  function unshift(node){
+    var oldFirst = self.getFirst();
+    node.setNext(self);
+    return node;
+  }
+
   function accept(visitor) {
     visitor.visit(item)
     if (next !== undefined && next !== null) {
@@ -83,6 +89,7 @@ function Node(item) {
     getFirst: getFirst,
     pop: pop,
     push : push,
+    unshift : unshift,
     accept: accept
   };
   first = last = self;
@@ -200,6 +207,16 @@ describe('Linked List', function() {
     var a = new Node('A');
     var b = new Node('B');
     a.push(b);
+  });
+
+  it('supports unshifting an item on to the beginning and returning the new beginning node', function(){
+    var a = new Node('A');
+    a= a.unshift(new Node('B'));
+    assert.equal(a.item, 'B');
+  });
+
+  it('supports shifting an item from the beginning', function(){
+
   });
 
   it.skip('speed of a native array', function() {
