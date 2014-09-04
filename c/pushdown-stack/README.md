@@ -2,7 +2,7 @@
 
 To get started simply run:
 ```bash
-    sh bootstrap.sh
+    sh bootstrap.sh pushdown-stack.gyp
 ```
 
 The executable will be inside of the `build/out/Default` directory
