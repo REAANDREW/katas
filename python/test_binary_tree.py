@@ -71,9 +71,8 @@ class TestConvertingBinaryTreeIntoBreathFirstView(unittest.TestCase):
             |_____  |
             |     | |
         0|1|2|3|4|5|6
-          |___| |
-          |_____|
-
+          |___| |    
+          |_____|    
         """
         tree = BinaryTree(6)
         tree.add(5)

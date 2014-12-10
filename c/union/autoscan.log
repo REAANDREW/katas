@@ -1,0 +1,20 @@
+autoscan: warning: missing AC_CHECK_HEADERS([stdlib.h]) wanted by: 
+	src/main.c:2
+	include/uf.h:2
+autoscan: warning: missing AC_CHECK_HEADERS([string.h]) wanted by: 
+	src/main.c:3
+autoscan: warning: missing AC_CHECK_HEADER_STDBOOL wanted by: 
+	src/main.c:10
+	src/uf.c:43
+	include/uf.h:13
+	src/main.c:10
+	src/uf.c:44
+	src/main.c:20
+autoscan: warning: missing AC_FUNC_MALLOC wanted by: 
+	src/uf.c:5
+autoscan: warning: missing AC_PREREQ wanted by: 
+	autoscan
+autoscan: warning: missing AC_PROG_CC wanted by: 
+	src/main.c
+	src/uf.c
+	include/uf.h

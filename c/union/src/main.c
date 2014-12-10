@@ -5,13 +5,14 @@
 
 #define LINE_MAX 50
 
-int main(){
+int main(int argc, char *argv[]){
     Union un;
     bool started = false;
     char line[LINE_MAX];
     char *p, *q;
     int number = 0;
 
+    printf("about to process");
     while(fgets(line, LINE_MAX, stdin) != NULL){
         if(!started){
             number = atoi(line); 
