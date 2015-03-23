@@ -1,13 +1,15 @@
 #include <stdlib.h>
 #include "queue.h"
 
-Node* createNode(void* data){
+Node*
+createNode(void* data){
     Node *item = (Node *) malloc(sizeof(Node));
     item->value = data;
     return item;
 }
 
-Queue* createQueue(void* data){
+Queue*
+createQueue(void* data){
     Queue *queue = (Queue *) malloc(sizeof(Queue));
     Node *firstNode = createNode(data);
     queue->first = firstNode;

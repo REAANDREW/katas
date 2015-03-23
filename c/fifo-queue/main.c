@@ -5,5 +5,5 @@ int
 main(){
     Queue *queue = createQueue("first item");
     enqueue(queue, "second item");
-    return 0;
+    printf("Fifo example finished.\n");
 }
